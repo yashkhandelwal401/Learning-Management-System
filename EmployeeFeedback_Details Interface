@@ -1,0 +1,47 @@
+{
+  a!gridField(
+    label: "Employee Feedback Details",
+    labelPosition: "ABOVE",
+    data: recordType!LMS_FeedBack,
+    columns: {
+      a!gridColumn(
+        label: "Employee Name",
+        sortField: recordType!LMS_FeedBack.fields.employeeId,
+        value:index(rule!LMS_Getemployeedetails(
+          fv!row[recordType!LMS_FeedBack.fields.employeeId]
+        ),
+        recordType!LMS Employee.fields.firstName
+        ),
+        align: "END"
+      ),
+      a!gridColumn(
+        label: "Course Name",
+        sortField: recordType!LMS_FeedBack.fields.courseId,
+        value: index(
+          rule!LMS_GetCourseDetails(
+            fv!row[recordType!LMS_FeedBack.fields.courseId]
+          ),
+          recordType!LMS Course.fields.name
+        ),
+        align: "END"
+      ),
+      a!gridColumn(
+        label: "Ratings",
+        sortField: recordType!LMS_FeedBack.fields.ratings,
+        value:fv!row[recordType!LMS_FeedBack.fields.ratings],
+        align: "END"
+      ),
+      a!gridColumn(
+        label: "Comments",
+        sortField: recordType!LMS_FeedBack.fields.comments,
+        value: fv!row[recordType!LMS_FeedBack.fields.comments]
+      )
+     
+    },
+    validations: {},
+    refreshAfter: "RECORD_ACTION",
+    showSearchBox: true,
+    showRefreshButton: true,
+    recordActions: {}
+  )
+}
