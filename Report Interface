@@ -1,0 +1,531 @@
+a!localVariables(
+  local!department,
+  local!course,
+  local!status,
+  {
+  a!localVariables(
+    local!totalEmployees: property(
+      a!queryRecordType(
+        recordType: recordType!LMS Employee,
+        pagingInfo: a!pagingInfo(startIndex: 1, batchSize: 10),
+        fetchTotalCount: true
+      ),
+      "totalCount",
+      {}
+    ),
+    local!totalCourses: property(
+      a!queryRecordType(
+        recordType: recordType!LMS Course,
+        pagingInfo: a!pagingInfo(startIndex: 1, batchSize: 10),
+        fetchTotalCount: true
+      ),
+      "totalCount",
+      {}
+    ),
+    local!totalTraining: property(
+      a!queryRecordType(
+        recordType: recordType!LMS Enrollment,
+        pagingInfo: a!pagingInfo(startIndex: 1, batchSize: 10),
+        fetchTotalCount: true
+      ),
+      "totalCount",
+      {}
+    ),
+    local!totalTrainers: property(
+      a!queryRecordType(
+        recordType: recordType!LMS Trainer,
+        pagingInfo: a!pagingInfo(startIndex: 1, batchSize: 10),
+        fetchTotalCount: true
+      ),
+      "totalCount",
+      {}
+    ),
+    local!textColor: "#060C22",
+    local!department,
+
+    a!sectionLayout(
+      label: "",
+      contents: {
+        a!columnsLayout(
+          columns: {
+            a!columnLayout(
+              contents: {
+                a!columnsLayout(
+                  columns: {
+                    a!columnLayout(
+                      contents: {
+                        a!cardLayout(
+                          contents: {
+                            a!richTextDisplayField(
+                              labelPosition: "COLLAPSED",
+                              value: {
+                                a!richTextItem(
+                                  text: local!totalEmployees,
+                                  color:"#FFD700",
+                                  size: "LARGE_PLUS"
+                                )
+                              },
+                              align: "CENTER"
+                            ),
+                            a!sideBySideLayout(
+                              items: {
+                                a!sideBySideItem(
+                                  item: a!richTextDisplayField(
+                                    labelPosition: "COLLAPSED",
+                                    value: {
+                                      a!richTextIcon(
+                                        icon: "users",
+                                        color: "#FFFFFF",
+                                        size: "MEDIUM"
+                                      ),
+                                      " ",
+                                      a!richTextItem(
+                                        text: "TOTAL EMPLOYEES",
+                                        color: "#FFFFFF",
+                                        size: "MEDIUM"
+                                      )
+                                    },
+                                    align: "CENTER"
+                                  ),
+                                  width: "AUTO"
+                                )
+                              },
+                              spacing: "DENSE",
+                              marginBelow: "NONE"
+                            )
+                          },
+                          height: "AUTO",
+                          style: "#001f3f",
+                          shape: "SEMI_ROUNDED",
+                          showBorder: false,
+                          showShadow: true
+                        )
+                      }
+                    ),
+                    a!columnLayout(
+                      contents: {
+                        a!cardLayout(
+                          contents: {
+                            a!richTextDisplayField(
+                              labelPosition: "COLLAPSED",
+                              value: {
+                                a!richTextItem(
+                                  text: local!totalCourses,
+                                  color: "#FFD700",
+                                  size: "LARGE_PLUS"
+                                )
+                              },
+                              align: "CENTER"
+                            ),
+                            a!sideBySideLayout(
+                              items: {
+                                a!sideBySideItem(
+                                  item: a!richTextDisplayField(
+                                    labelPosition: "COLLAPSED",
+                                    value: {
+                                      a!richTextIcon(
+                                        icon: "swatchbook",
+                                        color: "#FFFFFF",
+                                        size: "MEDIUM"
+                                      ),
+                                      " ",
+                                      a!richTextItem(
+                                        text: "TOTAL COURSES",
+                                        color: "#FFFFFF",
+                                        size: "MEDIUM"
+                                      )
+                                    },
+                                    align: "CENTER"
+                                  ),
+                                  width: "AUTO"
+                                )
+                              },
+                              spacing: "DENSE",
+                              marginBelow: "NONE"
+                            )
+                          },
+                          height: "AUTO",
+                          style: "#001f3f",
+                          shape: "SEMI_ROUNDED",
+                          showBorder: false,
+                          showShadow: true
+                        )
+                      }
+                    ),
+                    a!columnLayout(
+                      contents: {
+                        a!cardLayout(
+                          contents: {
+                            a!richTextDisplayField(
+                              labelPosition: "COLLAPSED",
+                              value: {
+                                a!richTextItem(
+                                  text: local!totalTraining,
+                                  color: "#FFD700",
+                                  size: "LARGE_PLUS"
+                                )
+                              },
+                              align: "CENTER"
+                            ),
+                            a!sideBySideLayout(
+                              items: {
+                                a!sideBySideItem(
+                                  item: a!richTextDisplayField(
+                                    labelPosition: "COLLAPSED",
+                                    value: {
+                                      a!richTextIcon(
+                                        icon: "graduation-cap",
+                                        color: "#FFFFFF",
+                                        size: "MEDIUM"
+                                      ),
+                                      " ",
+                                      a!richTextItem(
+                                        text: "TOTAL TRAININGS",
+                                        color: "#FFFFFF",
+                                        size: "MEDIUM"
+                                      )
+                                    },
+                                    align: "CENTER"
+                                  ),
+                                  width: "AUTO"
+                                )
+                              },
+                              spacing: "DENSE",
+                              marginBelow: "NONE"
+                            )
+                          },
+                          height: "AUTO",
+                          style: "#001f3f",
+                          shape: "SEMI_ROUNDED",
+                          showBorder: false,
+                          showShadow: true
+                        )
+                      }
+                    ),
+                    a!columnLayout(
+                      contents: {
+                        a!cardLayout(
+                          contents: {
+                            a!richTextDisplayField(
+                              labelPosition: "COLLAPSED",
+                              value: {
+                                a!richTextItem(
+                                  text: local!totalTrainers,
+                                  color: "#FFD700",
+                                  size: "LARGE_PLUS"
+                                )
+                              },
+                              align: "CENTER"
+                            ),
+                            a!sideBySideLayout(
+                              items: {
+                                a!sideBySideItem(
+                                  item: a!richTextDisplayField(
+                                    labelPosition: "COLLAPSED",
+                                    value: {
+                                      a!richTextIcon(
+                                        icon: "user-graduate",
+                                        color: "#FFFFFF",
+                                        size: "MEDIUM"
+                                      ),
+                                      " ",
+                                      a!richTextItem(
+                                        text: "TOTAL TRAINERS",
+                                        color: "#FFFFFF",
+                                        size: "MEDIUM"
+                                      )
+                                    },
+                                    align: "CENTER"
+                                  ),
+                                  width: "AUTO"
+                                )
+                              },
+                              spacing: "DENSE",
+                              marginBelow: "NONE"
+                            )
+                          },
+                          height: "AUTO",
+                          style: "#001f3f",
+                          shape: "SEMI_ROUNDED",
+                          showBorder: false,
+                          showShadow: true
+                        )
+                      }
+                    )
+                  },
+                  alignVertical: "MIDDLE"
+                )
+              },
+              width: "AUTO"
+            )
+          },
+          alignVertical: "TOP",
+          marginAbove: "NONE",
+          marginBelow: "NONE",
+          spacing: "SPARSE",
+          stackWhen: {
+            "PHONE",
+            "TABLET_PORTRAIT"
+          }
+        )
+      },
+      marginAbove: "MORE"
+    )
+  ),
+  a!sectionLayout(
+    label: "Course Learning Analysis ",
+    labelColor: "#001f3f",
+    contents: {
+      a!columnsLayout(
+        columns: {
+          a!columnLayout(
+            contents: {
+              a!dropdownField(
+                data: a!recordData(
+                  recordType: recordType!LMS LookUpTable,
+                  filters: a!queryLogicalExpression(
+                    operator: "AND",
+                    filters: {
+                      a!queryFilter(
+                        field: recordType!LMS LookUpTable.fields.categoryId,
+                        operator: "=",
+                        value: 6
+                      )
+                    },
+                    ignoreFiltersWithEmptyValues: true
+                  )
+                ),
+                choiceLabels: recordType!LMS LookUpTable.fields.value,
+                choiceValues: recordType!LMS LookUpTable.fields.id,
+                label: "",
+                labelPosition: "ABOVE",
+                placeholder: "Filter by Course",
+                value: local!department,
+                saveInto: local!department,
+                searchDisplay: "AUTO",
+                validations: {}
+                /*saveInto: local*/
+                
+              ),
+              a!sectionLayout(
+                label: "",
+                contents: {
+                  a!pieChartField(
+                    data: a!recordData(
+                      recordType: recordType!LMS Course,
+                      filters: a!queryLogicalExpression(
+                        operator: "AND",
+                        filters: {
+                          a!queryFilter(
+                            field: recordType!LMS Course.fields.department,
+                            operator: "=",
+                            value: local!department
+                          )
+                        },
+                        ignoreFiltersWithEmptyValues: true
+                      )
+                    ),
+                    config: a!pieChartConfig(
+                      primaryGrouping: a!grouping(
+                        field: recordType!LMS Course.fields.name,
+                        alias: "name_primaryGrouping"
+                      ),
+                      measures: {
+                        a!measure(
+                          function: "COUNT",
+                          field: recordType!LMS Course.fields.id',
+                          alias: "id_count_measure1"
+                        )
+                      },
+                      dataLimit: 100
+                    ),
+                    label: "Course across Department",
+                    labelPosition: "ABOVE",
+                    showDataLabels: false,
+                    showTooltips: true,
+                    showAsPercentage: true,
+                    allowImageDownload: true,
+                    colorScheme: a!colorSchemeCustom(
+                      colors: {
+                        "#3D9970",
+                        "#001f3f",
+                        "#39CCCC",
+                        "#FFD700",
+                        "#323b81"
+                      }
+                    ),
+                    style: "DONUT",
+                    seriesLabelStyle: "LEGEND",
+                    height: "MEDIUM",
+                    refreshAlways: true,
+                    refreshAfter: "RECORD_ACTION"
+                  )
+                },
+                divider: "NONE",
+                marginAbove: "MORE"
+              )
+            }
+          ),
+          a!columnLayout(
+            contents: {
+              a!dropdownField(
+                data: a!recordData(
+                  recordType: recordType!LMS LookUpTable,
+                  filters: a!queryLogicalExpression(
+                    operator: "AND",
+                    filters: {
+                      a!queryFilter(
+                        field: recordType!LMS LookUpTable.fields.categoryId,
+                        operator: "=",
+                        value: 7
+                      )
+                    },
+                    ignoreFiltersWithEmptyValues: true
+                  )
+                ),
+                choiceLabels: recordType!LMS LookUpTable.fields.value,
+                choiceValues: recordType!LMS LookUpTable.fields.id,
+                label: "",
+                labelPosition: "ABOVE",
+                placeholder: "Filter by Designation",
+                value: local!course,
+                saveInto: local!course,
+                searchDisplay: "AUTO",
+                validations: {}
+              ),
+              a!sectionLayout(
+                label: "",
+                contents: {
+                  a!barChartField(
+                    data: a!recordData(
+                      recordType: recordType!LMS_FeedBack,
+                      filters: a!queryLogicalExpression(
+                        operator: "AND",
+                        filters: {
+                          a!queryFilter(
+                            field: recordType!LMS_FeedBack.fields.ratings,
+                            operator: "=",
+                            value: local!course
+                          )
+                        },
+                        ignoreFiltersWithEmptyValues: true
+                      )
+                    ),
+                    config: a!barChartConfig(
+                      primaryGrouping: a!grouping(
+                        field: 'recordType!LMS_FeedBack.fields.ratings',
+                        alias: "ratings_primaryGrouping"
+                      ),
+                      measures: {
+                        a!measure(
+                          function: "AVG",
+                          field: 'recordType!LMS_FeedBack.fields.id',
+                          alias: "id_avg_measure1"
+                        )
+                      },
+                      dataLimit: 10
+                    ),
+                    label: "Count Over Ratings",
+                    labelPosition: "ABOVE",
+                    yAxisTitle: "Employee ID",
+                    stacking: "NORMAL",
+                    showLegend: true,
+                    showDataLabels: false,
+                    showTooltips: false,
+                    allowDecimalAxisLabels: true,
+                    allowImageDownload: true,
+                    colorScheme: a!colorSchemeCustom(
+                      colors: {
+                        "#39CCCC",
+                        "#39CCCC",
+                        "#3D9970",
+                        "#FFD700"
+                      }
+                    ),
+                    height: "AUTO",
+                    xAxisStyle: "STANDARD",
+                    yAxisStyle: "STANDARD",
+                    refreshAlways: true,
+                    refreshAfter: "RECORD_ACTION"
+                  )
+                },
+                divider: "NONE",
+                marginAbove: "MORE"
+              )
+            }
+          ),
+          a!columnLayout(
+            contents: {
+              a!dropdownField(
+                data: a!recordData(
+                  recordType: recordType!LMS LookUpTable,
+                  filters: a!queryLogicalExpression(
+                    operator: "AND",
+                    filters: {
+                      a!queryFilter(
+                        field: recordType!LMS LookUpTable.fields.categoryId,
+                        operator: "=",
+                        value: 7
+                      )
+                    },
+                    ignoreFiltersWithEmptyValues: true
+                  )
+                ),
+                choiceLabels: recordType!LMS LookUpTable.fields.value,
+                choiceValues: 'recordType!LMS LookUpTable.fields.id,
+                label: "",
+                labelPosition: "ABOVE",
+                placeholder: "Filter by Designation",
+                value: local!status,
+                saveInto: local!status,
+                searchDisplay: "AUTO",
+                validations: {}
+              ),
+              a!sectionLayout(
+                label: "",
+                contents: {
+                  a!areaChartField(
+                    data: recordType!LMS Enrollment,
+                    config: a!areaChartConfig(
+                      primaryGrouping: a!grouping(
+                        field: recordType!LMS Enrollment.fields.employeeId,
+                        alias: "employeeId_primaryGrouping"
+                      ),
+                      measures: {
+                        a!measure(
+                          function: "COUNT",
+                          field: recordType!LMS Enrollment.fields.id,
+                          alias: "id_count_measure1"
+                        )
+                      },
+                      dataLimit: 100
+                    ),
+                    label: "Area Chart",
+                    labelPosition: "ABOVE",
+                    stacking: "NORMAL",
+                    showLegend: true,
+                    showTooltips: true,
+                    allowImageDownload: true,
+                    colorScheme: "RAINFOREST",
+                    height: "MEDIUM",
+                    xAxisStyle: "STANDARD",
+                    yAxisStyle: "STANDARD",
+                    refreshAfter: "RECORD_ACTION"
+                  )
+                },
+                divider: "NONE",
+                marginAbove: "MORE"
+              )
+            }
+          )
+        },
+        spacing: "STANDARD",
+        showDividers: false
+      )
+    },
+    divider: "NONE",
+    dividerColor: "#dddddd",
+    marginAbove: "EVEN_MORE"
+  )
+}
+)
