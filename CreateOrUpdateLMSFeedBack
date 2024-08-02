@@ -1,0 +1,220 @@
+a!localVariables(
+  local!activeStep: 1,
+  local!steps: {
+    "Course",
+    "Rate Trainee",
+    "Comments",
+    "Review"
+  },
+  local!CourseId,
+  local!traineeName,
+  local!tempId,
+  local!rating,
+  local!comments,
+  local!TraineeChoiceList: index(
+    rule!LMS_EmployeeListFilterByTraineeId(local!tempId),
+    recordType!LMS Employee.fields.firstName
+  ),
+  a!formLayout(
+    label: "Provide Feedback",
+    contents: {
+      a!milestoneField(
+        steps: local!steps,
+        links: a!forEach(
+          items: local!steps,
+          expression: if(
+            local!activeStep <= fv!index,
+            null,
+            a!dynamicLink(
+              saveInto: a!save(local!activeStep, fv!index)
+            )
+          )
+        ),
+        active: local!activeStep
+      ),
+      a!sectionLayout(
+        contents: {
+          a!columnsLayout(
+            columns: {
+              a!columnLayout(
+                contents: {
+                  a!dropdownField(
+                    choiceLabels: index(
+                      rule!LMS_CourseListOfTrainer(),
+                      recordType!LMS Course.fields.name
+                    ),
+                    choiceValues: index(
+                      rule!LMS_CourseListOfTrainer(),
+                      recordType!LMS Course.fields.id
+                    ),
+                    label: "Course",
+                    labelPosition: "ABOVE",
+                    placeholder: "--- Select a Course ---",
+                    value: local!CourseId,
+                    saveInto: {
+                      local!CourseId,
+                      a!save(
+                        local!tempId,
+                        a!forEach(
+                          items: rule!LMS_FilterTraineeByCourse(local!CourseId),
+                          expression: index(fv!item, "employeeId_grouping1", null)
+                        )
+                      ),
+                      a!save(local!traineeName, null)
+                    },
+                    searchDisplay: "AUTO",
+                    required: true,
+                    validations: {}
+                  )
+                }
+              ),
+              a!columnLayout(
+                contents: {
+                  a!dropdownField(
+                    choiceLabels: local!TraineeChoiceList,
+                    choiceValues: local!tempId,
+                    label: "Trainee",
+                    labelPosition: "ABOVE",
+                    placeholder: "--- Select a Trainee ---",
+                    value: local!traineeName,
+                    saveInto: { local!traineeName },
+                    searchDisplay: "AUTO",
+                    required: true,
+                    disabled: if(
+                      a!isNullOrEmpty(local!CourseId),
+                      True,
+                      False
+                    ),
+                    validations: {}
+                  )
+                }
+              )
+            }
+          )
+        },
+        showWhen: local!activeStep = 1
+      ),
+      a!sectionLayout(
+        contents: {
+          a!floatingPointField(
+            label: "Rating",
+            placeholder: "Provide the rating between 1 - 5",
+            value: local!rating,
+            saveInto: local!rating,
+            required: true
+          )
+        },
+        showWhen: local!activeStep = 2
+      ),
+      a!sectionLayout(
+        contents: {
+          a!paragraphField(
+            label: "Remarks",
+            labelPosition: "ABOVE",
+            value: local!comments,
+            saveInto: local!comments,
+            refreshAfter: "UNFOCUS",
+            characterLimit: 300,
+            height: "MEDIUM",
+            required: true,
+            validations: {}
+          )
+        },
+        showWhen: local!activeStep = 3
+      ),
+      a!sectionLayout(
+        contents: {
+          a!richTextDisplayField(
+            label: "Trainee:",
+            labelPosition: "JUSTIFIED",
+            value: index(
+              rule!LMS_EmployeeListFilterByTraineeId(local!traineeName),
+              recordType!LMS Employee.fields.firstName
+            )
+          ),
+          a!richTextDisplayField(
+            label: "Course :",
+            labelPosition: "JUSTIFIED",
+            value: {
+              index(
+                a!queryRecordByIdentifier(
+                  recordType: recordType!LMS Course,
+                  identifier: local!CourseId
+                ),
+                recordType!LMS Course.fields.name
+              )
+            }
+          ),
+          a!richTextDisplayField(
+            label: "Remarks :",
+            labelPosition: "JUSTIFIED",
+            value: local!comments
+          ),
+          a!richTextDisplayField(
+            label: "Ratings :",
+            labelPosition: "JUSTIFIED",
+            value: local!rating
+          )
+        },
+        showWhen: local!activeStep = 4
+      )
+    },
+    buttons: a!buttonLayout(
+      primaryButtons: {
+        a!buttonWidget(
+          label: "Done",
+          saveInto: {
+            a!save(
+              ri!FeedbackData[recordType!LMS_FeedBack.fields.isActive],
+              True
+            ),
+            a!save(
+              ri!FeedbackData[recordType!LMS_FeedBack.fields.courseId],
+              local!CourseId
+            ),
+            a!save(
+              ri!FeedbackData[recordType!LMS_FeedBack.fields.employeeId],
+              local!traineeName
+            ),
+            a!save(
+              ri!FeedbackData[recordType!LMS_FeedBack.fields.ratings],
+              local!rating
+            ),
+            a!save(
+              ri!FeedbackData[recordType!LMS_FeedBack.fields.comments],
+              local!comments
+            ),
+            
+          },
+          submit: true,
+          style: "SOLID",
+          showWhen: local!activeStep = length(local!steps)
+        ),
+        a!buttonWidget(
+          label: "Next",
+          value: local!activeStep + 1,
+          saveInto: { local!activeStep },
+          style: "SOLID",
+          showWhen: local!activeStep <> length(local!steps),
+          validate: true
+        )
+      },
+      secondaryButtons: {
+        a!buttonWidget(
+          label: "Go Back",
+          value: local!activeStep - 1,
+          saveInto: local!activeStep,
+          showWhen: local!activeStep > 1
+        ),
+        a!buttonWidget(
+          label: "Cancel",
+          value: true,
+          saveInto: ri!cancel,
+          submit: true,
+          style: "LINK",
+          validate: false
+        )
+      }
+    )
+  )
+)
